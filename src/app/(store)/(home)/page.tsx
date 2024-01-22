@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { api } from '@/data/api';
 import type { Product } from '@/data/types/product';
+import { formatToBrazilianCurrency } from '@/utils/format-to-brazilian-currency';
 
 async function getFeaturedProducts(): Promise<Product[]> {
   const response = await api('/products/featured', {
@@ -15,7 +16,7 @@ async function getFeaturedProducts(): Promise<Product[]> {
   return products;
 }
 
-export default async function Home() {
+export default async function HomePage() {
   const products = await getFeaturedProducts();
   const [highlightedProduct, ...otherProducts] = products;
 
@@ -37,10 +38,7 @@ export default async function Home() {
         <div className="absolute bottom-10 right-10 h-12 flex items-center gap-2 max-width[288px] rounded-full border-2 border-zinc-500  bg-black/60 p-1 pl-5">
           <span className="text-small truncate">{highlightedProduct.title}</span>
           <span className="flex h-full items-center justify-center rounded-full bg-violet-500 px-4 font-semibold">
-            {highlightedProduct.price.toLocaleString('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
+            {formatToBrazilianCurrency(highlightedProduct.price)}
           </span>
         </div>
       </Link>
@@ -63,11 +61,7 @@ export default async function Home() {
           <div className="absolute bottom-10 right-10 h-12 flex items-center gap-2 max-width[288px] rounded-full border-2 border-zinc-500  bg-black/60 p-1 pl-5">
             <span className="text-small truncate">{title}</span>
             <span className="flex h-full items-center justify-center rounded-full bg-violet-500 px-4 font-semibold">
-              {
-                price.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
+              {formatToBrazilianCurrency(price)}
             </span>
           </div>
         </Link>
