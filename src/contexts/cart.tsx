@@ -3,8 +3,8 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-interface CartItem {
-  productId: string;
+export interface CartItem {
+  productId: number;
   quantity: number;
 }
 
