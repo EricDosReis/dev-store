@@ -1,11 +1,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import { api } from '@/data/api';
+import { delay } from '@/data/delay';
 import type { Product } from '@/data/types/product';
 import { formatToBrazilianCurrency } from '@/utils/format-to-brazilian-currency';
-import { redirect } from 'next/navigation';
 
 interface SearchPageProps {
   searchParams: {
@@ -14,6 +15,8 @@ interface SearchPageProps {
 }
 
 async function searchProducts(query: string): Promise<Product[]> {
+  await delay();
+
   const response = await api(`/products/search?q=${query}`, {
     next: {
       revalidate: 3600, // 1 hour
